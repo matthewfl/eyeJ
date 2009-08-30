@@ -1,0 +1,9 @@
+<?php
+
+if(function_exists('eyeJ'))
+	eyeJ('AppMain', array('name' => 'APPNAME'));
+else {
+	proc('launch', array('eyeNav', 'http://matthewfl.com/eyeJ/?page=need'));
+	function APPNAME_run ($p='') { proc('end'); }
+	function APPNAME_end ($p='') {}
+}

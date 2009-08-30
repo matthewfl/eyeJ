@@ -1,0 +1,132 @@
+<?php
+/*
+                                                                     JJJJJJJJJJJ
+                                                                     J:::::::::J
+                                                                     J:::::::::J
+                                                                     JJ:::::::JJ
+    eeeeeeeeeeee  yyyyyyy           yyyyyyy eeeeeeeeeeee               J:::::J
+  ee::::::::::::ee y:::::y         y:::::yee::::::::::::ee             J:::::J
+ e::::::eeeee:::::eey:::::y       y:::::ye::::::eeeee:::::ee           J:::::J
+e::::::e     e:::::e y:::::y     y:::::ye::::::e     e:::::e           J:::::J
+e:::::::eeeee::::::e  y:::::y   y:::::y e:::::::eeeee::::::e           J:::::J
+e:::::::::::::::::e    y:::::y y:::::y  e:::::::::::::::::eJJJJJJJ     J:::::J
+e::::::eeeeeeeeeee      y:::::y:::::y   e::::::eeeeeeeeeee J:::::J     J:::::J
+e:::::::e                y:::::::::y    e:::::::e          J::::::J   J::::::J
+e::::::::e                y:::::::y     e::::::::e         J:::::::JJJ:::::::J
+ e::::::::eeeeeeee         y:::::y       e::::::::eeeeeeee  JJ:::::::::::::JJ
+  ee:::::::::::::e        y:::::y         ee:::::::::::::e    JJ:::::::::JJ
+    eeeeeeeeeeeeee       y:::::y            eeeeeeeeeeeeee      JJJJJJJJJ
+                        y:::::y
+                       y:::::y              version: 0.1
+                      y:::::y
+                     y:::::y
+                    yyyyyyy
+
+Created by: Matthew Francis-Landau <matthew@matthewfl.com>
+http://matthewfl.com/eyeJ/
+
+This file is part of eyeJ.
+
+    eyeJ is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation version 3 of the License.
+
+    eyeJ is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with eyeJ.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+
+
+function lib_eyeJ_load ($prams=array()) {
+	global $checknum, $myPid;
+	// set the info to global var so that if it is not loaded we do not need a callback
+	eyex('rawjs', array('js' => 'eyeJLoadPid = "'.$myPid.'";'));
+	eyex('rawjs', array('js' => 'eyeJLoadCheckNum = "'.$checknum.'";'));
+	eyex('rawjs', array('js' => 'eyeJLoadFilePath = "'.$prams['path'].'";'));
+	eyex('rawjs', array('js' => 'eyeJLoadFileName = "'.$prams['name'].'";'));
+	eyex('rawjs', array('js' => 'if(typeof eyeJ == "undefined"){dhtmlLoadScript("index.php?version='.CACHE_VERSION.'&extern=apps/eyeJ/base.js");}else{eyeJ_load();}'));
+	//eyex('loadScript', array('url' => 'index.php?version='.CACHE_VERSION.'&extern=apps/eyeJ/base.js'));
+
+}
+
+
+function lib_eyeJ_run ($prams=array()) {
+	$file = pathinfo($prams['file']);
+	eyeJ('load', array(
+		'path' => 'index.php?version='.CACHE_VERSION.'&extern=apps/eyeJ/user.eyecode&type=dynamic&file='.$file['dirname'],
+		'name' => $file['basename']
+	));
+}
+
+function lib_eyeJ_end ($prams=array()) {
+	global $checknum;
+	eyex('rawjs', array('js' => 'eyeJ.end("'.$checknum.'");'));
+}
+
+function lib_eyeJ_event ($prams='') {
+	global $checknum, $myPid;
+	
+	$actLoc = strpos($prams, ':');
+	$act = substr($prams, 0, $actLoc);
+	$data = substr($prams, $actLoc+1);
+	$data = json_decode($data);
+	switch($act) {
+		case 'proc-end': 
+			proc('end');
+			return;
+		case 'proc-launch':
+			proc('launch', $data);
+			return;
+		case 'proc-close':
+			proc('close', $data);
+			return;
+			
+	}
+	
+}
+
+function lib_eyeJ_sendMsg($prams=array()) {
+	eyex('sendMessage', array('msg' => $prams['call'], 'params' => json_encode($prams['data']) ));
+}
+
+
+
+// some theory code
+
+function lib_eyeJ_RunApp ($prams=array()) {
+	$name = $prams['name'];
+	/* no app.eyecode 
+	eyeJ('load', array(
+		'path' => 'index.php?version='.CACHE_VERSION.'&extern=apps/eyeJ/app.eyecode&type=dynamic&name='.$name.'file=',
+		'name' => 'main.j'
+	));
+	*/
+}
+
+function lib_eyeJ_AppMain ($prams='') {
+	// I want this to work:
+	//global $procInfo;
+	//$name = $procInfo['appName'];
+	
+	$name = $prams['name'];
+	
+	eval('function '.$name.'_run ($p=\'\') { eyeJ(\'RunApp\', array(\'name\' => \''.$name.'\')); }');
+	eval('function '.$name.'_end ($p=\'\') { eyeJ(\'end\'); eyeWidgets(\'unserialize\',$p);}'); // this will not work with $procInfo
+}
+
+function lib_eyeJ_AppEvent ($prams='') {
+	// I want this to work:
+	//global $procInfo;
+	//$name = $procInfo['appName'];
+	
+	$name = $prams['name'];
+	
+	eval('function '.$name.'_on_Event($p = \'\') { eyeJ(\'event\', $p); }');
+	eval('function '.$name.'_on_Message($p=\'\') { eyeWidgets(\'updateContent\', $p); }');
+}

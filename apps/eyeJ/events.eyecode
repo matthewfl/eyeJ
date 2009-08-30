@@ -1,0 +1,35 @@
+<?php
+
+function eyeJ_on_Message ($p='') {
+	eyeWidgets('updateContent', $p);
+}
+
+function eyeJ_on_Close ($p ='') {
+	proc('end');
+}
+
+function eyeJ_on_OpenSite($p='')
+{
+	proc('launch', array('eyeNav', 'http://matthewfl.com/eyeJ/'));
+	proc('end');
+}
+
+
+function eyeJ_on_Openfile ($pram=null) { // edit the file with eyeNotes
+	global $ScriptFile, $myPid;
+	$file = $ScriptFile->text;
+	proc('launch', array ('eyeNotes', $file));
+	proc('end');
+}
+
+
+function eyeJ_on_RunButton ($prams=null) {
+	global $ScriptFile;
+	$file = $ScriptFile->text;
+	eyeWidgets('unserialize',$params);
+	eyeJ('run', array('file' => $file));
+}
+
+function eyeJ_on_Event($params = '') {
+	eyeJ('event', $params);
+}

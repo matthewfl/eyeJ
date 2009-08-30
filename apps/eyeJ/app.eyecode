@@ -1,0 +1,95 @@
+<?php
+
+function eyeJ_run($prams = '') {
+	$file = $prams[0];
+	$info = pathinfo($file);
+	
+	/*if($info['filename'] == "" || !isset($info['filename'])) {
+		proc('end');
+		return;
+	}*/
+	
+	$wind = new Window (array (
+		'name' => 'Question',
+		'father' => 'eyeApps',
+		'title' => 'EyeJ - '.$info['filename'],
+		'cent' => 1,
+		'width' => 415,
+		'height' => 125
+	));
+	
+	$wind->show();
+	
+	$text = new Label (array(
+		'name' => 'textOpen',
+		'father' => 'Question_Content',
+		'x' => 20,
+		'y' => 15,
+		'text' => 'What do you want to do with '.$info['filename']
+	));
+	
+	$text->show();
+	
+	$Hfile = new Hidden (array(
+		'name' => 'ScriptFile',
+		'text' => $file,
+		'father' => 'Question_Content'
+	));
+	
+	$Hfile->show();
+	
+	$edit_button = new Button (array(
+		'name' => 'Openfile',
+		'caption' => 'Edit File',
+		'father' => 'Question_Content',
+		'x' => 20,
+		'y' => 50,
+		'width' => 75,
+		'height' => 25
+	));
+	
+	$edit_button->addFriend($Hfile);
+	$edit_button->show();
+	
+	$close_button = new Button (array(
+		'name' => 'CloseButton',
+		'caption' => 'Cancel',
+		'father' => 'Question_Content',
+		'signal' => 'Close',
+		'x' => 120,
+		'y' => 50,
+		'width' => 75,
+		'height' => 25
+	));
+	$close_button->show();
+	
+	$site_button = new Button (array(
+		'name' => 'SiteButton',
+		'caption' => 'Web Site',
+		'father' => 'Question_Content',
+		'signal' => 'OpenSite',
+		'x' => 220,
+		'y' => 50,
+		'width' => 75,
+		'height' => 25
+	));
+	
+	$site_button->show();
+	
+	$run_button = new Button (array(
+		'name' => 'RunButton',
+		'caption' => 'Run',
+		'father' => 'Question_Content',
+		'x' => 320,
+		'y' => 50,
+		'width' => 75,
+		'height' => 25
+	));
+	$run_button->addFriend($Hfile);
+	$run_button->show();
+}
+
+function eyeJ_end($params = '') {
+	eyeJ('end');
+	eyeWidgets('unserialize',$params);
+}

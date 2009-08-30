@@ -1,0 +1,12 @@
+<package>
+	<name>eyeJ</name>
+	<category>Utilities</category>
+	<version>0.1</version>
+	<description>A runtime for Objective-J script files in eyeOS.</description>
+	<author>Matthew Francis-Landau (matthew@matthewfl.com)</author>
+	<page>http://matthewfl.com/eyeJ/</page>
+	<download>http://matthewfl.com/eyeJ/?page=download-nightly</download>
+	<license>GPLv3</license>
+	<type>Utility</type>
+	<icon></icon>
+</package>

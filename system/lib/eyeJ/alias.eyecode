@@ -1,0 +1,46 @@
+<?php
+/*
+                                                                     JJJJJJJJJJJ
+                                                                     J:::::::::J
+                                                                     J:::::::::J
+                                                                     JJ:::::::JJ
+    eeeeeeeeeeee  yyyyyyy           yyyyyyy eeeeeeeeeeee               J:::::J
+  ee::::::::::::ee y:::::y         y:::::yee::::::::::::ee             J:::::J
+ e::::::eeeee:::::eey:::::y       y:::::ye::::::eeeee:::::ee           J:::::J
+e::::::e     e:::::e y:::::y     y:::::ye::::::e     e:::::e           J:::::J
+e:::::::eeeee::::::e  y:::::y   y:::::y e:::::::eeeee::::::e           J:::::J
+e:::::::::::::::::e    y:::::y y:::::y  e:::::::::::::::::eJJJJJJJ     J:::::J
+e::::::eeeeeeeeeee      y:::::y:::::y   e::::::eeeeeeeeeee J:::::J     J:::::J
+e:::::::e                y:::::::::y    e:::::::e          J::::::J   J::::::J
+e::::::::e                y:::::::y     e::::::::e         J:::::::JJJ:::::::J
+ e::::::::eeeeeeee         y:::::y       e::::::::eeeeeeee  JJ:::::::::::::JJ
+  ee:::::::::::::e        y:::::y         ee:::::::::::::e    JJ:::::::::JJ
+    eeeeeeeeeeeeee       y:::::y            eeeeeeeeeeeeee      JJJJJJJJJ
+                        y:::::y
+                       y:::::y              version: 0.1
+                      y:::::y
+                     y:::::y
+                    yyyyyyy
+
+Created by: Matthew Francis-Landau <matthew@matthewfl.com>
+http://matthewfl.com/eyeJ/
+
+This file is part of eyeJ.
+
+    eyeJ is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation version 3 of the License.
+
+    eyeJ is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with eyeJ.  If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+function eyeJ ($call, $args=null, $noList=true) {
+	return reqLib('eyeJ', $call, $args, $noList);
+}
