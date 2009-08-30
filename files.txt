@@ -1,0 +1,5 @@
+/apps/eyeJ
+/apps/share/filetypes/		j.xml
+/extern/apps/eyeJ
+/system/lib/eyeJ
+/system/services/extern/		Mod to make 404 on file not found

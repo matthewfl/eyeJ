@@ -1,0 +1,9 @@
+add a watchdog to make sure that the program has not crashed
+add the header to all source files
+
+create a UI system
+UI:
+	Window:
+		when exiting the app make the system clean up the thing out of the mini-bar (tried but did not get it working)
+
+
